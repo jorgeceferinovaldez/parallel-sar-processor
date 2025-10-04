@@ -624,27 +624,27 @@ Los siguientes resultados fueron obtenidos procesando 50 imágenes SAR con el pi
 
 | Técnica | Tiempo (s) | Speedup | Velocidad (img/s) | Imágenes |
 |---------|-----------|---------|-------------------|----------|
-| Secuencial OpenCV | 18.58 | 1.00x | 2.69 | 50 |
-| Pool (24 cores) | 10.66 | 1.74x | 4.69 | 50 |
-| ThreadPool (24 threads) | 8.33 | 2.23x | 6.00 | 50 |
-| MPI (12 cores) | 10.08 | 1.84x | 4.96 | 50 |
-| CuPy GPU | 12.88 | 1.44x | 3.88 | 50 |
+| Secuencial OpenCV | 18.60 | 1.00x | 2.69 | 50 |
+| Pool (24 cores) | 10.23 | 1.82x | 4.89 | 50 |
+| ThreadPool (24 threads) | 8.13 | 2.29x | 6.15 | 50 |
+| MPI (12 cores) | 10.81 | 1.72x | 4.63 | 50 |
+| CuPy GPU | 12.75 | 1.46x | 3.92 | 50 |
 
 ### Análisis de resultados
 
-**🏆 Mejor rendimiento:** ThreadPool (24 threads) - 2.23x speedup
+**🏆 Mejor rendimiento:** ThreadPool (24 threads) - 2.29x speedup
 - Aprovecha mejor el paralelismo a nivel de hilos para operaciones I/O intensivas
 - Menor overhead de comunicación entre hilos comparado con procesos
 
-**🥈 Segundo lugar:** MPI (12 cores) - 1.84x speedup
-- Excelente para procesamiento distribuido en clusters
-- Escalabilidad lineal al agregar más nodos
-
-**🥉 Tercer lugar:** Pool (24 cores) - 1.74x speedup
+**🥈 Segundo lugar:** Pool (24 cores) - 1.82x speedup
 - Buen balance entre rendimiento y simplicidad
 - Mayor overhead por creación de procesos
 
-**💡 Nota sobre CuPy GPU (1.44x speedup):**
+**🥉 Tercer lugar:** MPI (12 cores) - 1.72x speedup
+- Excelente para procesamiento distribuido en clusters
+- Escalabilidad lineal al agregar más nodos
+
+**💡 Nota sobre CuPy GPU (1.46x speedup):**
 - El speedup relativamente bajo se debe a:
   - Overhead de transferencia CPU ↔ GPU
   - Imágenes de tamaño moderado (1000x2000 px)
