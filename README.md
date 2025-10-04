@@ -6,7 +6,7 @@ Este repositorio implementa y compara diferentes técnicas de procesamiento para
 
 ---
 
-## 📋 Descripción del Proyecto
+## 📋 Descripción del proyecto
 
 El proyecto implementa un pipeline completo de procesamiento de imágenes SAR que incluye:
 - Filtrado de ruido speckle
@@ -16,7 +16,7 @@ El proyecto implementa un pipeline completo de procesamiento de imágenes SAR qu
 - Extracción de línea de costa
 - Análisis de textura (varianza local)
 
-### Técnicas de Paralelización Implementadas
+### Técnicas de paralelización implementadas
 
 1. **Secuencial OpenCV**: Implementación base sin paralelización
 2. **Multiprocessing Pool**: Paralelización CPU usando múltiples procesos
@@ -26,13 +26,13 @@ El proyecto implementa un pipeline completo de procesamiento de imágenes SAR qu
 
 ---
 
-## 🛰️ Fuente de Datos
+## 🛰️ Fuente de datos
 
-### Dataset de Imágenes SAR de Alaska
+### Dataset de imágenes SAR de Alaska
 
 Las imágenes utilizadas en este proyecto provienen del producto **ORI (Orthorectified Radar Image)** de **Intermap Technologies**, obtenidas a través del portal **EarthExplorer** del Servicio Geológico de Estados Unidos (USGS). Los datos fueron adquiridos mediante el sistema aerotransportado **STAR-3** de Radar de Apertura Sintética Interferométrico (IFSAR) sobre Alaska, entre el 23 de agosto y el 6 de septiembre de 2012.
 
-#### Especificaciones de los Datos Originales
+#### Especificaciones de los datos originales
 
 | Parámetro | Valor |
 |-----------|-------|
@@ -49,7 +49,7 @@ Las imágenes utilizadas en este proyecto provienen del producto **ORI (Orthorec
 | **Período de adquisición** | 23 de agosto - 6 de septiembre de 2012 |
 | **Total de imágenes** | 50 |
 
-#### Procesamiento Aplicado al Dataset
+#### Procesamiento aplicado al dataset
 
 Las imágenes originales fueron procesadas para optimizar su almacenamiento y uso en aplicaciones de procesamiento paralelo, reduciendo sus dimensiones mediante reescalado:
 
@@ -60,7 +60,7 @@ Las imágenes originales fueron procesadas para optimizar su almacenamiento y us
 
 Esta reducción permitió generar un dataset más manejable (de ~1 GB a ~80 MB por imagen) manteniendo las características espaciales relevantes de las imágenes radar para el análisis de erosión costera.
 
-#### Cita Recomendada
+#### Cita recomendada
 
 ```
 Intermap Technologies Inc. (2012). IFSAR ORI Alaska - Orthorectified Radar Images.
@@ -68,7 +68,7 @@ Obtenido de USGS EarthExplorer. Datos de adquisición: Agosto-Septiembre 2012.
 Accedido: [fecha de descarga].
 ```
 
-#### Descarga del Dataset
+#### Descarga del dataset
 
 El dataset preprocesado (50 imágenes, 2000×4000 px) se descarga automáticamente al ejecutar:
 
@@ -80,16 +80,16 @@ Las imágenes se almacenarán en el directorio `dataset/` en formato PNG.
 
 ---
 
-## 🚀 Instalación y Configuración
+## 🚀 Instalación y configuración
 
-### 1. Clonar el Repositorio
+### 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/jorgeceferinovaldez/parallel-sar-processor.git
 cd parallel-sar-processor
 ```
 
-### 2. Crear Entorno Conda con Python 3.11
+### 2. Crear entorno Conda con Python 3.11
 
 ```bash
 # Crear entorno conda con Python 3.11
@@ -99,7 +99,7 @@ conda create -n parallel-sar-processor python=3.11
 conda activate parallel-sar-processor
 ```
 
-### 3. Instalar Dependencias
+### 3. Instalar dependencias
 
 #### Instalación Básica (CPU)
 
@@ -116,7 +116,7 @@ Este comando instalará las siguientes dependencias principales:
 - CuPy (procesamiento GPU - requiere CUDA)
 - gdown (descarga de datasets)
 
-#### Instalación para Desarrollo (Opcional)
+#### Instalación para desarrollo (Opcional)
 
 ```bash
 make install-dev
@@ -130,7 +130,7 @@ Incluye herramientas adicionales:
 - Jupyter notebooks
 - Profiling (line-profiler, memory-profiler)
 
-### 4. Requisitos del Sistema
+### 4. Requisitos del sistema
 
 #### MPI
 Para usar el procesamiento con MPI, necesitas tener instalado `mpiexec` o `mpirun`:
@@ -145,7 +145,7 @@ sudo apt-get install openmpi-bin libopenmpi-dev
 sudo dnf install openmpi openmpi-devel
 ```
 
-#### CUDA Toolkit 12.x (Requerido para CuPy GPU)
+#### CUDA Toolkit 12.x (requerido para CuPy GPU)
 
 **IMPORTANTE**: CuPy requiere el CUDA Toolkit completo instalado y configurado en el sistema para tener soporte de GPU. Sin CUDA Toolkit, CuPy no funcionará.
 
@@ -154,7 +154,7 @@ sudo dnf install openmpi openmpi-devel
 - Driver NVIDIA actualizado (versión ≥ 525.60.13 para CUDA 12.x)
 - CUDA Toolkit 12.x completo
 
-##### Opción 1: Instalación de CUDA Toolkit mediante Conda (Recomendado)
+##### Opción 1: Instalación de CUDA Toolkit mediante Conda (recomendado)
 
 La forma más sencilla y segura es instalar CUDA Toolkit directamente en el entorno conda:
 
@@ -211,7 +211,7 @@ export PATH=/usr/local/cuda-12.6/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-12.6/lib64:$LD_LIBRARY_PATH
 ```
 
-##### Verificar instalación de CUDA y Driver NVIDIA
+##### Verificar instalación de CUDA y driver NVIDIA
 
 ```bash
 # Verificar versión de CUDA Toolkit instalado
@@ -241,7 +241,7 @@ python -c "import cupy as cp; print(f'CuPy version: {cp.__version__}'); print(f'
   - CUDA 11.x: `cupy-cuda11x`
   - CUDA 12.x: `cupy-cuda12x`
 
-### 5. Verificar Instalación
+### 5. Verificar instalación
 
 ```bash
 make check
@@ -255,11 +255,11 @@ Este comando verificará:
 
 ---
 
-## 📦 Comandos Make Disponibles
+## 📦 Comandos make disponibles
 
 El proyecto utiliza un `Makefile` para automatizar todas las tareas. A continuación se describen los comandos disponibles:
 
-### Comandos de Configuración
+### Comandos de configuración
 
 | Comando | Descripción |
 |---------|-------------|
@@ -269,7 +269,7 @@ El proyecto utiliza un `Makefile` para automatizar todas las tareas. A continuac
 | `make install-dev` | Instala dependencias de desarrollo desde `requirements-dev.txt` |
 | `make check` | Verifica requisitos del sistema (Python, MPI, CUDA, CuPy) |
 
-### Comandos de Procesamiento
+### Comandos de procesamiento
 
 | Comando | Descripción |
 |---------|-------------|
@@ -279,7 +279,7 @@ El proyecto utiliza un `Makefile` para automatizar todas las tareas. A continuac
 | `make comparacion` | Genera gráficos y resumen comparativo de todas las técnicas |
 | `make pipeline` | Ejecuta el pipeline completo (download + MPI + parallel + comparacion) |
 
-### Comandos Auxiliares
+### Comandos auxiliares
 
 | Comando | Descripción |
 |---------|-------------|
@@ -289,9 +289,9 @@ El proyecto utiliza un `Makefile` para automatizar todas las tareas. A continuac
 
 ---
 
-## 🎯 Flujo de Trabajo Típico
+## 🎯 Flujo de trabajo típico
 
-### Ejecución Completa del Pipeline
+### Ejecución completa del pipeline
 
 ```bash
 # 1. Configuración inicial (solo primera vez)
@@ -307,7 +307,7 @@ El comando `make pipeline` ejecutará secuencialmente:
 3. Procesamiento paralelo (Pool, Thread, CuPy)
 4. Generación de gráficos comparativos
 
-### Ejecución Paso a Paso
+### Ejecución paso a paso
 
 ```bash
 # 1. Descargar dataset
@@ -323,7 +323,7 @@ make parallel
 make comparacion
 ```
 
-### Personalizar Número de Procesos MPI
+### Personalizar número de procesos MPI
 
 Por defecto se utilizan 12 procesos. Para cambiar este valor:
 
@@ -337,9 +337,9 @@ make run-mpi NPROCS=8
 
 ---
 
-## 📊 Resultados y Salidas
+## 📊 Resultados y salidas
 
-### Estructura de Directorios de Salida
+### Estructura de directorios de salida
 
 Al ejecutar el pipeline o los comandos de descarga/procesamiento, se generarán automáticamente los siguientes directorios:
 
@@ -374,7 +374,7 @@ summary/                 # [CREADO EN COMPARACIÓN] Resumen y gráficos
 └── metricas_todas_tecnicas_completo.csv   # Tabla comparativa completa
 ```
 
-### Imágenes Generadas por Técnica
+### Imágenes generadas por técnica
 
 Para cada imagen SAR procesada se generan 5 salidas:
 
@@ -384,7 +384,7 @@ Para cada imagen SAR procesada se generan 5 salidas:
 4. **coastline.png**: Línea de costa extraída
 5. **texture.png**: Mapa de análisis de textura (varianza local)
 
-### Métricas Calculadas
+### Métricas calculadas
 
 Para cada imagen se calculan las siguientes métricas:
 
@@ -402,7 +402,7 @@ Para cada imagen se calculan las siguientes métricas:
 
 ---
 
-## 🔄 Diagrama de Flujo de Procesamiento
+## 🔄 Diagrama de flujo de procesamiento
 
 El siguiente diagrama muestra el pipeline de procesamiento aplicado a cada imagen:
 
@@ -501,7 +501,7 @@ NOTAS:
 
 ---
 
-## 🧪 Descripción de Scripts Principales
+## 🧪 Descripción de scripts principales
 
 ### `download_dataset.py`
 Descarga automáticamente el dataset de imágenes SAR desde Google Drive.
@@ -588,7 +588,7 @@ procesar_imagen_sar_gpu(
 
 ## 🔧 Personalización
 
-### Cambiar Número de Procesos/Hilos
+### Cambiar número de procesos/hilos
 
 **En el Makefile (MPI):**
 ```makefile
@@ -601,14 +601,14 @@ P = mp.cpu_count()              # Pool: todos los cores
 num_hilos = P                   # Thread: todos los hilos
 ```
 
-### Cambiar Tamaño de Imagen Procesada
+### Cambiar tamaño de imagen procesada
 
 En los scripts de procesamiento:
 ```python
 tamanio_fijo = (1000, 2000)  # (ancho, alto) en píxeles
 ```
 
-### Agregar Nuevas Métricas
+### Agregar nuevas métricas
 
 1. Modificar función `procesar_imagen_sar_costera()` en `tools_img.py`
 2. Agregar cálculo de nueva métrica en el diccionario `metricas`
@@ -616,9 +616,9 @@ tamanio_fijo = (1000, 2000)  # (ancho, alto) en píxeles
 
 ---
 
-## 📈 Resultados Obtenidos
+## 📈 Resultados obtenidos
 
-### Benchmarks Reales - 50 Imágenes SAR (1000x2000 px)
+### Benchmarks reales - 50 Imágenes SAR (1000x2000 px)
 
 Los siguientes resultados fueron obtenidos procesando 50 imágenes SAR con el pipeline completo:
 
@@ -630,7 +630,7 @@ Los siguientes resultados fueron obtenidos procesando 50 imágenes SAR con el pi
 | MPI (12 cores) | 10.08 | 1.84x | 4.96 | 50 |
 | CuPy GPU | 12.88 | 1.44x | 3.88 | 50 |
 
-### Análisis de Resultados
+### Análisis de resultados
 
 **🏆 Mejor rendimiento:** ThreadPool (24 threads) - 2.23x speedup
 - Aprovecha mejor el paralelismo a nivel de hilos para operaciones I/O intensivas
@@ -666,7 +666,7 @@ Los siguientes resultados fueron obtenidos procesando 50 imágenes SAR con el pi
 
 ---
 
-## ⚠️ Solución de Problemas
+## ⚠️ Solución de problemas
 
 ### Error: MPI no encontrado
 ```bash
@@ -835,7 +835,7 @@ nvidia-smi
 
 ---
 
-## 📚 Dependencias Principales
+## 📚 Dependencias principales
 
 | Librería | Versión | Propósito |
 |----------|---------|-----------|
@@ -852,7 +852,7 @@ nvidia-smi
 
 ## 👤 Autor
 
-Proyecto desarrollado por Jorge Ceferino Valdez para el curso **"Python para HPC - Introducción a la programación HPC con Python y sus aplicaciones al campo de proceso de imágenes"**.
+Proyecto desarrollado por Jorge Ceferino Valdez.
 
 ---
 
