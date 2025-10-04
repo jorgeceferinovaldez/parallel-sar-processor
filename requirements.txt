@@ -1,12 +1,16 @@
 # Dependencias para Procesamiento de Imágenes SAR
 # Versiones específicas verificadas y probadas
 
+# Dependencias para Procesamiento de Imágenes SAR
+# ================================================
+# Versiones específicas verificadas y probadas
+
 # Descarga de datos
 gdown==5.2.0
 
 # Procesamiento de imágenes
-opencv-python==4.12.0
-opencv-python-headless==4.12.0
+opencv-python==4.12.0.88
+opencv-python-headless==4.12.0.88
 numpy==2.2.6
 
 # Análisis de datos
