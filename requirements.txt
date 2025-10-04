@@ -1,0 +1,24 @@
+# Dependencias para Procesamiento de Imágenes SAR
+# Versiones específicas verificadas y probadas
+
+# Descarga de datos
+gdown==5.2.0
+
+# Procesamiento de imágenes
+opencv-python==4.12.0
+opencv-python-headless==4.12.0
+numpy==2.2.6
+
+# Análisis de datos
+pandas==2.3.2
+
+# Visualización
+matplotlib==3.10.6
+matplotlib-inline==0.1.7
+seaborn==0.13.2
+
+# Procesamiento paralelo
+mpi4py==4.1.0
+
+# GPU Computing (requiere CUDA 12.x)
+cupy-cuda12x==13.6.0

@@ -17,10 +17,22 @@ OUTPUT_DIR := output
 GRAPHS_DIR := graphs
 
 # Targets principales
-.PHONY: all help download-dataset MPI parallel comparacion pipeline clean
+.PHONY: all help setup install install-dev check download-dataset MPI parallel comparacion pipeline clean
 
 # Target por defecto: mostrar ayuda
 all: help
+
+# Instalar dependencias
+install:
+	@echo "==> Instalando dependencias..."
+	pip install -r requirements.txt
+	@echo "==> Dependencias instaladas "
+
+# Instalar dependencias de desarrollo (opcional)
+install-dev:
+	@echo "==> Instalando dependencias de desarrollo..."
+	pip install -r requirements-dev.txt
+	@echo "==> Dependencias de desarrollo instaladas "
 
 # Ayuda: muestra todos los comandos disponibles
 help:
@@ -29,6 +41,10 @@ help:
 	@echo "=================================================="
 	@echo ""
 	@echo "Comandos disponibles:"
+	@echo "  make setup            - Configuración inicial (install + check)"
+	@echo "  make install          - Instalar dependencias Python"
+	@echo "  make install-dev      - Instalar dependencias de desarrollo"
+	@echo "  make check            - Verificar requisitos del sistema"
 	@echo "  make download-dataset  - Descargar el dataset"
 	@echo "  make MPI              - Procesar usando MPI ($(MPI_PROCESSES) procesos)"
 	@echo "  make parallel         - Procesar usando técnicas paralelas"
@@ -73,14 +89,21 @@ pipeline: download-dataset MPI parallel comparacion
 clean:
 	@echo "==> Limpiando archivos generados..."
 	rm -rf $(OUTPUT_DIR)/* $(GRAPHS_DIR)/* __pycache__ *.pyc
-	@echo "==> Limpieza completada  "
+	@echo "==> Limpieza completada "
 
 # Targets adicionales útiles
+
+# Configuración inicial completa
+.PHONY: setup
+setup: install check
+	@echo ""
+	@echo "==> Configuración inicial completada "
+	@echo "    Usa 'make pipeline' para ejecutar el procesamiento completo"
 
 # Ejecutar solo procesamiento (MPI + Paralelo)
 .PHONY: procesamiento
 procesamiento: MPI parallel
-	@echo "==> Procesamiento completado  "
+	@echo "==> Procesamiento completado "
 
 # Verificar requisitos del sistema
 .PHONY: check
@@ -88,7 +111,9 @@ check:
 	@echo "==> Verificando requisitos del sistema..."
 	@which $(PYTHON) > /dev/null || (echo "Error: Python no encontrado" && exit 1)
 	@which $(MPI_EXEC) > /dev/null || (echo "Error: MPI no encontrado" && exit 1)
-	@echo "==> Verificación completada  "
+	@which nvcc > /dev/null && echo " CUDA Toolkit encontrado: $(nvcc --version | grep release)" || echo " CUDA Toolkit no encontrado (requerido para CuPy)"
+	@$(PYTHON) -c "import cupy; print(' CuPy instalado correctamente')" 2>/dev/null || echo " CuPy no instalado o sin soporte CUDA"
+	@echo "==> Verificación completada "
 
 # Ejecutar con número personalizado de procesos MPI
 # Uso: make run-mpi NPROCS=8
